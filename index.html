@@ -1,1 +1,347 @@
-Louises_Strikkehjoerne_V3.html
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Louises Strikkehjørne 🧶</title>
+<style>
+  :root {
+    --bg:           #fdf0f5;
+    --header-bg:    #e8a0bf;
+    --header-text:  #fff;
+    --accent:       #d96fa0;
+    --accent-light: #fce4ef;
+    --card-bg:      #fff7fb;
+    --border:       #f2c4d8;
+    --text:         #5a2d4a;
+    --muted:        #b07090;
+    --soft-tan:     #f5d6e8;
+    --green:        #7ec8a0;
+    --green-light:  #d8f5e8;
+    --yellow-light: #fdf5d4;
+    --red-light:    #fde0ec;
+    --stat-bg:      rgba(255,255,255,0.28);
+    --shadow:       0 2px 14px rgba(210,100,160,0.10);
+    --lavender:     #c8b4e8;
+    --lavender-light: #ede4fa;
+    --peach:        #f5c5a3;
+    --peach-light:  #fdeee4;
+    --mint:         #a8dfc8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+  header {
+    background: linear-gradient(135deg, #e8a0bf 0%, #c8b4e8 100%);
+    color: var(--header-text);
+    text-align: center;
+    padding: 30px 20px 22px;
+    border-bottom: 4px solid #d48cb8;
+  }
+  header h1 { font-size: 2rem; letter-spacing: 1px; text-shadow: 0 1px 3px rgba(180,80,140,0.2); }
+  header p  { font-size: 0.95rem; margin-top: 5px; color: #fce4ef; font-style: italic; }
+  .stats {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, #e8a0bf 0%, #c8b4e8 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-box {
+    background: var(--stat-bg);
+    border-radius: 14px;
+    padding: 10px 22px;
+    text-align: center;
+    min-width: 90px;
+    color: #fff;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.35);
+  }
+  .stat-box .num { font-size: 1.8rem; font-weight: bold; }
+  .stat-box .lbl { font-size: 0.70rem; text-transform: uppercase; letter-spacing: 1px; color: #fce4ef; }
+  .container { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+  .ny-knap {
+    width: 100%; padding: 14px; border: none; border-radius: 16px;
+    background: linear-gradient(135deg, #e8a0bf, #c8b4e8);
+    color: #fff; font-size: 1.1rem; font-family: Georgia, serif;
+    cursor: pointer; box-shadow: 0 3px 14px rgba(210,100,160,0.25);
+    transition: opacity 0.2s; margin-bottom: 20px; letter-spacing: 0.5px;
+  }
+  .ny-knap:hover { opacity: 0.88; }
+  .formular {
+    background: var(--card-bg); border-radius: 18px; padding: 22px;
+    box-shadow: var(--shadow); margin-bottom: 24px;
+    border: 1px solid var(--border); display: none;
+  }
+  .formular h3 { margin-bottom: 14px; color: var(--accent); font-size: 1.1rem; }
+  .formular label { display: block; font-size: 0.83rem; color: var(--muted); margin-bottom: 3px; margin-top: 10px; }
+  .formular input, .formular select, .formular textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 10px; font-size: 1rem; font-family: Georgia, serif;
+    background: #fff; color: var(--text);
+  }
+  .formular input:focus, .formular select:focus, .formular textarea:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light);
+  }
+  .formular textarea { resize: vertical; min-height: 70px; }
+  .form-knapper { display: flex; gap: 10px; margin-top: 16px; }
+  .gem-knap {
+    flex: 1; padding: 12px; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, #7ec8a0, #a8dfc8);
+    color: #fff; font-size: 1rem; font-family: Georgia, serif; cursor: pointer;
+  }
+  .gem-knap:hover { opacity: 0.88; }
+  .annuller-knap {
+    padding: 12px 18px; border: none; border-radius: 12px;
+    background: var(--soft-tan); color: var(--text); font-size: 1rem;
+    font-family: Georgia, serif; cursor: pointer;
+  }
+  .projekt-kort {
+    background: var(--card-bg); border-radius: 18px; padding: 18px 20px;
+    margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .kort-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .kort-titel { font-size: 1.2rem; color: var(--accent); font-weight: bold; }
+  .status-badge { font-size: 0.80rem; padding: 4px 13px; border-radius: 20px; font-weight: bold; white-space: nowrap; }
+  .status-ikke  { background: var(--yellow-light); color: #7a6200; }
+  .status-gang  { background: var(--peach-light);  color: #a05020; }
+  .status-faerd { background: var(--green-light);  color: #2a6040; }
+  .kort-info { margin-top: 8px; font-size: 0.90rem; color: var(--muted); line-height: 1.7; }
+  .billede-wrapper { margin-top: 12px; }
+  .billede-wrapper img { max-width: 100%; border-radius: 12px; max-height: 200px; object-fit: cover; border: 1px solid var(--border); }
+  .noter-boks {
+    margin-top: 10px; background: var(--lavender-light); border-radius: 10px;
+    padding: 10px 14px; font-size: 0.88rem; color: #6040a0;
+    white-space: pre-wrap; border: 1px solid var(--lavender);
+  }
+  .raekke-sektion { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .raekke-label { font-size: 0.83rem; color: var(--muted); }
+  .raekke-antal { font-size: 1.5rem; font-weight: bold; color: var(--accent); min-width: 36px; text-align: center; }
+  .raekke-knap {
+    width: 36px; height: 36px; border: none; border-radius: 50%;
+    font-size: 1.3rem; cursor: pointer; font-weight: bold;
+    display: flex; align-items: center; justify-content: center; transition: opacity 0.15s;
+  }
+  .raekke-knap:hover { opacity: 0.8; }
+  .raekke-plus  { background: var(--green); color: #fff; }
+  .raekke-minus { background: var(--red-light); color: var(--accent); border: 1px solid var(--border); }
+  .raekke-nul   { background: var(--soft-tan); color: var(--text); font-size: 0.75rem; padding: 0 12px; width: auto; border-radius: 12px; }
+  .kort-handlinger { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .rediger-knap {
+    flex: 1; padding: 9px; border: none; border-radius: 10px;
+    background: var(--lavender-light); border: 1px solid var(--lavender);
+    color: #6040a0; font-size: 0.9rem; font-family: Georgia, serif; cursor: pointer;
+  }
+  .rediger-knap:hover { background: var(--lavender); color: #fff; }
+  .slet-knap {
+    padding: 9px 14px; border: none; border-radius: 10px;
+    background: var(--red-light); border: 1px solid var(--border);
+    color: #c04070; font-size: 0.9rem; font-family: Georgia, serif; cursor: pointer;
+  }
+  .slet-knap:hover { background: #f9b8d0; }
+  .tom-besked { text-align: center; color: var(--muted); padding: 50px 20px; font-style: italic; font-size: 1rem; }
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(180, 80, 140, 0.25); backdrop-filter: blur(3px);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-overlay.aktiv { display: flex; }
+  .modal-boks {
+    background: var(--card-bg); border-radius: 18px; padding: 30px;
+    max-width: 360px; width: 90%; text-align: center;
+    box-shadow: 0 8px 36px rgba(210,100,160,0.2); border: 1px solid var(--border);
+  }
+  .modal-boks h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.15rem; }
+  .modal-boks p  { color: var(--muted); font-size: 0.93rem; margin-bottom: 22px; line-height: 1.6; }
+  .modal-knapper { display: flex; gap: 10px; }
+  .modal-ja {
+    flex: 1; padding: 11px; border: none; border-radius: 10px;
+    background: var(--red-light); border: 1px solid var(--border);
+    color: #c04070; font-size: 1rem; font-family: Georgia, serif; cursor: pointer;
+  }
+  .modal-nej {
+    flex: 1; padding: 11px; border: none; border-radius: 10px;
+    background: linear-gradient(135deg, #e8a0bf, #c8b4e8);
+    color: #fff; font-size: 1rem; font-family: Georgia, serif; cursor: pointer;
+  }
+  .bolge {
+    width: 100%; height: 18px;
+    background: linear-gradient(135deg, #e8a0bf 0%, #c8b4e8 100%);
+    clip-path: ellipse(55% 100% at 50% 0%);
+    margin-bottom: -2px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>🧶 Louises Strikkehjørne</h1>
+  <p>Din personlige strikke-tracker</p>
+</header>
+<div class="stats">
+  <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Projekter</div></div>
+  <div class="stat-box"><div class="num" id="stat-gang">0</div><div class="lbl">I gang</div></div>
+  <div class="stat-box"><div class="num" id="stat-faerd">0</div><div class="lbl">Færdige</div></div>
+  <div class="stat-box"><div class="num" id="stat-raekker">0</div><div class="lbl">Rækker i alt</div></div>
+</div>
+<div class="bolge"></div>
+<div class="container">
+  <button class="ny-knap" onclick="aabneFormular()">🌸 Nyt Projekt</button>
+  <div class="formular" id="formular">
+    <h3 id="formular-titel">✨ Nyt Projekt</h3>
+    <label>Projektnavn *</label>
+    <input id="inp-navn" placeholder="fx Julesweater til Emil">
+    <label>Garn</label>
+    <input id="inp-garn" placeholder="fx Drops Alaska, naturhvid">
+    <label>Pindestørrelse</label>
+    <input id="inp-pind" placeholder="fx 5 mm">
+    <label>Status</label>
+    <select id="inp-status">
+      <option value="ikke">🟡 Ikke startet</option>
+      <option value="gang">🟠 I gang</option>
+      <option value="faerd">🟢 Færdig</option>
+    </select>
+    <label>Noter</label>
+    <textarea id="inp-noter" placeholder="Mønsterbeskrivelse, kommentarer..."></textarea>
+    <label>Projektbillede (valgfrit)</label>
+    <input type="file" id="inp-billede" accept="image/*" onchange="haandterBillede(this)">
+    <div class="form-knapper">
+      <button class="gem-knap" onclick="gemProjekt()">💾 Gem</button>
+      <button class="annuller-knap" onclick="lukFormular()">Annuller</button>
+    </div>
+  </div>
+  <div id="liste"></div>
+</div>
+<div class="modal-overlay" id="slet-modal">
+  <div class="modal-boks">
+    <h3>🗑️ Slet projekt?</h3>
+    <p id="slet-tekst">Er du sikker på, at du vil slette dette projekt?</p>
+    <div class="modal-knapper">
+      <button class="modal-ja" onclick="bekraeftSlet()">Ja, slet</button>
+      <button class="modal-nej" onclick="lukkModal()">Bevar det 🌸</button>
+    </div>
+  </div>
+</div>
+<script>
+  let projekter = JSON.parse(localStorage.getItem('strikke_v3')) || [];
+  let redigerIndex = null;
+  let sletIndex = null;
+  let billedeData = null;
+  const statusTekst  = { ikke: '🟡 Ikke startet', gang: '🟠 I gang', faerd: '🟢 Færdig' };
+  const statusKlasse = { ikke: 'status-ikke', gang: 'status-gang', faerd: 'status-faerd' };
+  function gem() { localStorage.setItem('strikke_v3', JSON.stringify(projekter)); }
+  function haandterBillede(input) {
+    const fil = input.files[0]; if (!fil) return;
+    const reader = new FileReader();
+    reader.onload = e => { billedeData = e.target.result; };
+    reader.readAsDataURL(fil);
+  }
+  function aabneFormular(index = null) {
+    redigerIndex = index; billedeData = null;
+    document.getElementById('inp-billede').value = '';
+    if (index !== null) {
+      const p = projekter[index];
+      document.getElementById('formular-titel').textContent = '✏️ Rediger Projekt';
+      document.getElementById('inp-navn').value   = p.navn   || '';
+      document.getElementById('inp-garn').value   = p.garn   || '';
+      document.getElementById('inp-pind').value   = p.pind   || '';
+      document.getElementById('inp-status').value = p.status || 'ikke';
+      document.getElementById('inp-noter').value  = p.noter  || '';
+      billedeData = p.billede || null;
+    } else {
+      document.getElementById('formular-titel').textContent = '✨ Nyt Projekt';
+      document.getElementById('inp-navn').value   = '';
+      document.getElementById('inp-garn').value   = '';
+      document.getElementById('inp-pind').value   = '';
+      document.getElementById('inp-status').value = 'ikke';
+      document.getElementById('inp-noter').value  = '';
+    }
+    document.getElementById('formular').style.display = 'block';
+    document.getElementById('inp-navn').focus();
+  }
+  function lukFormular() {
+    document.getElementById('formular').style.display = 'none';
+    redigerIndex = null; billedeData = null;
+  }
+  function gemProjekt() {
+    const navn = document.getElementById('inp-navn').value.trim();
+    if (!navn) { alert('Skriv et projektnavn 🌸'); return; }
+    const projekt = {
+      navn,
+      garn:    document.getElementById('inp-garn').value.trim(),
+      pind:    document.getElementById('inp-pind').value.trim(),
+      status:  document.getElementById('inp-status').value,
+      noter:   document.getElementById('inp-noter').value.trim(),
+      billede: billedeData,
+      raekker: redigerIndex !== null ? (projekter[redigerIndex].raekker || 0) : 0
+    };
+    if (redigerIndex !== null) { projekter[redigerIndex] = projekt; } else { projekter.push(projekt); }
+    gem(); lukFormular(); visProjekter();
+  }
+  function justerRaekke(index, delta) {
+    projekter[index].raekker = Math.max(0, (projekter[index].raekker || 0) + delta);
+    gem(); visProjekter();
+  }
+  function bekraeftSletning(index) {
+    sletIndex = index;
+    document.getElementById('slet-tekst').textContent =
+      `Er du sikker på, at du vil slette "${projekter[index].navn}"? Det kan ikke fortrydes.`;
+    document.getElementById('slet-modal').classList.add('aktiv');
+  }
+  function bekraeftSlet() {
+    if (sletIndex !== null) { projekter.splice(sletIndex, 1); gem(); visProjekter(); }
+    lukkModal();
+  }
+  function lukkModal() {
+    document.getElementById('slet-modal').classList.remove('aktiv'); sletIndex = null;
+  }
+  function opdaterStatistik() {
+    document.getElementById('stat-total').textContent   = projekter.length;
+    document.getElementById('stat-gang').textContent    = projekter.filter(p => p.status === 'gang').length;
+    document.getElementById('stat-faerd').textContent   = projekter.filter(p => p.status === 'faerd').length;
+    document.getElementById('stat-raekker').textContent = projekter.reduce((s, p) => s + (p.raekker || 0), 0);
+  }
+  function visProjekter() {
+    opdaterStatistik();
+    const liste = document.getElementById('liste');
+    if (projekter.length === 0) {
+      liste.innerHTML = '<div class="tom-besked">🌸 Ingen projekter endnu — tryk på knappen for at tilføje dit første! 🧶</div>';
+      return;
+    }
+    liste.innerHTML = projekter.map((p, i) => `
+      <div class="projekt-kort">
+        <div class="kort-top">
+          <div class="kort-titel">${p.navn}</div>
+          <span class="status-badge ${statusKlasse[p.status] || 'status-ikke'}">${statusTekst[p.status] || statusTekst.ikke}</span>
+        </div>
+        <div class="kort-info">
+          ${p.garn ? `🧶 ${p.garn}` : ''}
+          ${p.garn && p.pind ? ' · ' : ''}
+          ${p.pind ? `📌 Pind ${p.pind}` : ''}
+        </div>
+        ${p.billede ? `<div class="billede-wrapper"><img src="${p.billede}" alt="Projektbillede"></div>` : ''}
+        ${p.noter ? `<div class="noter-boks">📝 ${p.noter}</div>` : ''}
+        <div class="raekke-sektion">
+          <span class="raekke-label">Rækker:</span>
+          <button class="raekke-knap raekke-minus" onclick="justerRaekke(${i}, -1)">−</button>
+          <span class="raekke-antal">${p.raekker || 0}</span>
+          <button class="raekke-knap raekke-plus" onclick="justerRaekke(${i}, +1)">+</button>
+          <button class="raekke-knap raekke-nul" onclick="justerRaekke(${i}, -(projekter[${i}].raekker||0))">Nulstil</button>
+        </div>
+        <div class="kort-handlinger">
+          <button class="rediger-knap" onclick="aabneFormular(${i})">✏️ Rediger</button>
+          <button class="slet-knap" onclick="bekraeftSletning(${i})">🗑️ Slet</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  visProjekter();
+</script>
+</body>
+</html>
