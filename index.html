@@ -80,9 +80,6 @@
   .lightbox.aktiv { display: flex; }
   .lightbox img { max-width: 92vw; max-height: 80vh; border-radius: 12px; }
   .lightbox-luk { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
-  .lightbox-pdf { background: var(--card-bg); border-radius: 14px; padding: 30px; text-align: center; max-width: 320px; }
-  .lightbox-pdf p { color: var(--muted); font-size: 0.9rem; margin: 10px 0 16px; }
-  .lightbox-pdf a { display: inline-block; padding: 11px 22px; border-radius: 10px; background: linear-gradient(135deg, #e8a0bf, #c8b4e8); color: #fff; text-decoration: none; font-size: 1rem; }
   .raekke-sektion { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .raekke-label { font-size: 0.83rem; color: var(--muted); }
   .raekke-antal { font-size: 1.5rem; font-weight: bold; color: var(--accent); min-width: 36px; text-align: center; }
@@ -234,9 +231,17 @@
   }
   function justerRaekke(index, delta) { projekter[index].raekker = Math.max(0, (projekter[index].raekker || 0) + delta); gem(); visProjekter(); }
   function aabneMedia(data, type, navn) {
-    document.getElementById('lightbox-indhold').innerHTML = type === 'billede'
-      ? `<img src="${data}" alt="Billede">`
-      : `<div class="lightbox-pdf"><span style="font-size:3rem">📄</span><p>${navn}</p><a href="${data}" download="${navn}">⬇️ Download PDF</a></div>`;
+    if (type === 'pdf') {
+      const byteString = atob(data.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+      const blob = new Blob([ab], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      return;
+    }
+    document.getElementById('lightbox-indhold').innerHTML = `<img src="${data}" alt="Billede">`;
     document.getElementById('lightbox').classList.add('aktiv');
   }
   function lukkLightbox() { document.getElementById('lightbox').classList.remove('aktiv'); }
