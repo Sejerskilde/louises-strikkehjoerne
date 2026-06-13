@@ -28,6 +28,7 @@ button{
   background:#d9c7b3;
   font-size:18px;
   margin-top:10px;
+  cursor:pointer;
 }
 
 .card{
@@ -38,7 +39,8 @@ button{
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-input{
+input,
+select{
   width:100%;
   padding:10px;
   margin-top:8px;
@@ -54,6 +56,14 @@ input{
 
 .sletKnap{
   background:#f2c7c7;
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  margin-top:5px;
+  font-weight:bold;
 }
 
 </style>
@@ -74,6 +84,12 @@ input{
 <input id="garnNavn" placeholder="Garn">
 
 <input id="pind" placeholder="Pindestørrelse">
+
+<select id="status">
+  <option value="🟡 Ikke startet">🟡 Ikke startet</option>
+  <option value="🟠 I gang">🟠 I gang</option>
+  <option value="🟢 Færdig">🟢 Færdig</option>
+</select>
 
 <button onclick="gemProjekt()">
 💾 Gem Projekt
@@ -102,6 +118,9 @@ function gemProjekt(){
   let pind =
   document.getElementById("pind").value;
 
+  let status =
+  document.getElementById("status").value;
+
   if(navn===""){
     alert("Skriv et projektnavn");
     return;
@@ -113,7 +132,8 @@ function gemProjekt(){
   projekter.push({
     navn: navn,
     garn: garn,
-    pind: pind
+    pind: pind,
+    status: status
   });
 
   localStorage.setItem(
@@ -154,9 +174,14 @@ function visProjekter(){
 
     html += `
       <div class="card">
+
         <h3>${projekt.navn}</h3>
+
         <p><strong>Garn:</strong> ${projekt.garn}</p>
+
         <p><strong>Pind:</strong> ${projekt.pind}</p>
+
+        <p><strong>Status:</strong> ${projekt.status || "🟡 Ikke startet"}</p>
 
         <button class="sletKnap"
         onclick="sletProjekt(${index})">
