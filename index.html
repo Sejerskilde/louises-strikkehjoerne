@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="da">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Louises Strikkehjørne</title>
@@ -13,77 +9,54 @@
 <style>
 
 body{
-
   font-family: Arial, sans-serif;
-
   background:#f7f3eb;
-
   margin:0;
-
   padding:20px;
-
 }
 
 h1{
-
   text-align:center;
-
   color:#6b4f3a;
-
 }
 
 button{
-
   width:100%;
-
   padding:15px;
-
   border:none;
-
   border-radius:12px;
-
   background:#d9c7b3;
-
   font-size:18px;
-
+  margin-top:10px;
 }
 
 .card{
-
   background:white;
-
   padding:15px;
-
   margin-top:15px;
-
   border-radius:12px;
-
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
 }
 
 input{
-
   width:100%;
-
   padding:10px;
-
   margin-top:8px;
-
   margin-bottom:8px;
-
   box-sizing:border-box;
-
+  border:1px solid #ddd;
+  border-radius:8px;
 }
 
 #formular{
-
   display:none;
+}
 
+.sletKnap{
+  background:#f2c7c7;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -91,9 +64,7 @@ input{
 <h1>🧶 Louises Strikkehjørne</h1>
 
 <button onclick="visFormular()">
-
 ➕ Nyt Projekt
-
 </button>
 
 <div id="formular" class="card">
@@ -102,10 +73,10 @@ input{
 
 <input id="garnNavn" placeholder="Garn">
 
+<input id="pind" placeholder="Pindestørrelse">
+
 <button onclick="gemProjekt()">
-
 💾 Gem Projekt
-
 </button>
 
 </div>
@@ -117,80 +88,86 @@ input{
 <script>
 
 function visFormular(){
-  alert("Hej Louise 😍");
-
   document.getElementById("formular").style.display="block";
-
 }
 
 function gemProjekt(){
 
   let navn =
-
   document.getElementById("projektNavn").value;
 
   let garn =
-
   document.getElementById("garnNavn").value;
 
+  let pind =
+  document.getElementById("pind").value;
+
   if(navn===""){
-
     alert("Skriv et projektnavn");
-
     return;
-
   }
 
   let projekter =
-
   JSON.parse(localStorage.getItem("projekter")) || [];
 
   projekter.push({
-
     navn: navn,
-
-    garn: garn
-
+    garn: garn,
+    pind: pind
   });
 
   localStorage.setItem(
-
     "projekter",
-
     JSON.stringify(projekter)
+  );
 
+  document.getElementById("projektNavn").value="";
+  document.getElementById("garnNavn").value="";
+  document.getElementById("pind").value="";
+
+  visProjekter();
+}
+
+function sletProjekt(index){
+
+  let projekter =
+  JSON.parse(localStorage.getItem("projekter")) || [];
+
+  projekter.splice(index,1);
+
+  localStorage.setItem(
+    "projekter",
+    JSON.stringify(projekter)
   );
 
   visProjekter();
-
 }
 
 function visProjekter(){
 
   let projekter =
-
   JSON.parse(localStorage.getItem("projekter")) || [];
 
   let html="";
 
-  projekter.forEach(function(projekt){
+  projekter.forEach(function(projekt,index){
 
     html += `
-
       <div class="card">
-
         <h3>${projekt.navn}</h3>
+        <p><strong>Garn:</strong> ${projekt.garn}</p>
+        <p><strong>Pind:</strong> ${projekt.pind}</p>
 
-        <p>Garn: ${projekt.garn}</p>
+        <button class="sletKnap"
+        onclick="sletProjekt(${index})">
+        🗑️ Slet Projekt
+        </button>
 
       </div>
-
     `;
-
   });
 
   document.getElementById("liste").innerHTML = html;
-
 }
 
 visProjekter();
@@ -198,5 +175,4 @@ visProjekter();
 </script>
 
 </body>
-
 </html>
